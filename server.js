@@ -28,6 +28,12 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('setUser', client);
 	});
 
+	socket.on('disconnect', function() {
+		var i = allClients.indexOf(socket);
+		taxis.splice(i, 1);
+		socket.broadcast.emit('addTaxis', taxis);
+	});
+
 	socket.on('newTaxi', function (data) {
 		var taxiId = taxis.push(data) - 1;
 		taxis[taxiId].latitude = taxis[taxiId].latitude - 0.003
@@ -36,7 +42,7 @@ io.sockets.on('connection', function (socket) {
 		taxis[taxiId].id = taxiId;
 		taxis[taxiId].socketId = socket.id;
 		socket.emit('setUser', taxi);
-		socket.broadcast.emit('addTaxi', taxis[taxiId]);
+		socket.broadcast.emit('addTaxis', taxis);
 	});
 
 	socket.on('taxiRequest', function (data) {
