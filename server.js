@@ -25,8 +25,9 @@ var client = {
 io.sockets.on('connection', function (socket) {
 
 	socket.on('newClient', function () {
+		client.socketId = socket.id;
 		socket.emit('setUser', client);
-		console.log(taxis);
+		
 		socket.broadcast.emit('addTaxis', taxis);
 	});
 
@@ -59,6 +60,12 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.socket(data.socketId).emit('accepted', {
 			accepted: data.accepted,
 			marker: data.marker
+		});
+	})
+
+	socket.on('updatePosition', function (data) {
+		io.sockets.socket(data.clientSocket).emit('update', {
+			taxiPosition: data.taxiPosition
 		});
 	})
 
