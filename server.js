@@ -26,6 +26,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('newClient', function () {
 		socket.emit('setUser', client);
+		console.log(taxis);
 		socket.broadcast.emit('addTaxis', taxis);
 	});
 
