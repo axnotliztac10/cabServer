@@ -16,10 +16,10 @@ app.get('/', function (req, res) {
 });
 
 var client = {
-		icon: 'http://shift-portal.appspot.com/assets/imgs/a_white.png'
+		icon: 'http://taxipreferente.cloudapp.net:3000/public/origin_icon.png'
 	},
 	taxi = {
-		icon: ''
+		icon: 'http://taxipreferente.cloudapp.net:3000/public/taxi_icon.png'
 	};
 
 io.sockets.on('connection', function (socket) {
