@@ -29,7 +29,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function() {
-		var i = allClients.indexOf(socket);
+		var i = taxis.indexOf(socket);
 		taxis.splice(i, 1);
 		socket.broadcast.emit('addTaxis', taxis);
 	});
