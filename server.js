@@ -39,8 +39,8 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('newTaxi', function (data) {
 		var taxiId = taxis.push(data) - 1;
-		taxis[taxiId].latitude = taxis[taxiId].latitude - 0.003
-		taxis[taxiId].longitude = taxis[taxiId].longitude - 0.003
+		taxis[taxiId].latitude = taxis[taxiId].latitude - 0.001
+		taxis[taxiId].longitude = taxis[taxiId].longitude - 0.001
 		taxis[taxiId].type = 'taxi';
 		taxis[taxiId].id = taxiId;
 		taxis[taxiId].socketId = socket.id;
