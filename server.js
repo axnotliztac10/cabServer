@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
-		taxis.push(collections.taxis);
+		collections.taxis.push(collections.taxis);
 	});
 
 	socket.on('disconnect', function() {
