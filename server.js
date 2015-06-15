@@ -7,7 +7,7 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	collections = {
 		clients: [],
-		taxis: []
+		taxis: [{}, {}]
 	};
 
 server.listen(3000);
@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
-		collections.taxis.push(collections.taxis);
+		collections.taxis.push(data);
 	});
 
 	socket.on('disconnect', function() {
