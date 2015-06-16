@@ -31,6 +31,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
 		data.id = socket.id; //Change by real taxi Id
+		data.type = 'taxi';
 		collections.taxis[socket.id] = data;
 
 		socket.emit('setTaxiResponse', data);
