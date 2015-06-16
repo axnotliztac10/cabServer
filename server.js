@@ -6,8 +6,8 @@ var express = require('express'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
 	collections = {
-		clients: [],
-		taxis: []
+		clients: {},
+		taxis: {}
 	};
 
 server.listen(3000);
@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect', function() {
 		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
 		if (collections.clients[socket.id]) delete collections.clients[socket.id];
-		socket.emit('activeTaxis', collections.taxis);
+		io.sockets.broadcast('activeTaxis', collections.taxis);
 	});
 
 });
