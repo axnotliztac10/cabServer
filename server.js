@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect', function() {
 		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
 		if (collections.clients[socket.id]) delete collections.clients[socket.id];
-		io.sockets.broadcast('activeTaxis', collections.taxis);
+		socket.broadcast.emit('activeTaxis', collections.taxis);
 	});
 
 });
