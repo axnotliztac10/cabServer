@@ -44,4 +44,8 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('activeTaxis', collections.taxis);
 	});
 
+	socket.on('taxiRequest', function (data) {
+		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', data.client)
+	});
+
 });
