@@ -30,6 +30,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
+		data.id = socket.id; //Change by real taxi Id
 		collections.taxis[socket.id] = data;
 
 		socket.emit('setTaxiResponse', data);
