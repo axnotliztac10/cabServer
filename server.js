@@ -22,16 +22,23 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setClient', function (data) {
 		data.socketId = socket.id;
+		collections.clients[socket.id] = data;
+
+		socket.emit('setClientResponse', data);
 		socket.emit('activeTaxis', collections.taxis);
 	});
 
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
-		collections.taxis.push(data);
+		collections.taxis[socket.id] = data;
+
+		socket.emit('setTaxiResponse', data);
 	});
 
 	socket.on('disconnect', function() {
-		
+		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
+		if (collections.clients[socket.id]) delete collections.clients[socket.id];
+		socket.emit('activeTaxis', collections.taxis);
 	});
 
 });
