@@ -33,6 +33,7 @@ io.sockets.on('connection', function (socket) {
 		collections.taxis[socket.id] = data;
 
 		socket.emit('setTaxiResponse', data);
+		socket.broadcast.emit('activeTaxis', collections.taxis);
 	});
 
 	socket.on('disconnect', function() {
