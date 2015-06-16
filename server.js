@@ -7,7 +7,7 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	collections = {
 		clients: [],
-		taxis: [{}, {}]
+		taxis: []
 	};
 
 server.listen(3000);
