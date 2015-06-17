@@ -49,8 +49,12 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', data.client)
 	});
 
-	socket.on('taxiRequestAccepted', function (data) {
-
+	socket.on('taxiResponseToRequest', function (data) {
+		io.sockets.socket(data.client.socketId).emit('taxiResponseToRequest', {
+			client: data.client,
+			taxi: data.taxi,
+			accepted: true
+		});
 	});
 
 });
