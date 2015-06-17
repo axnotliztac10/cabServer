@@ -22,6 +22,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setClient', function (data) {
 		data.socketId = socket.id;
+		data.id = socket.id; //Change by real client Id
 		collections.clients[socket.id] = data;
 
 		socket.emit('setClientResponse', data);
@@ -46,6 +47,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiRequest', function (data) {
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', data.client)
+	});
+
+	socket.on('taxiRequestAccepted', function (data) {
+
 	});
 
 });
