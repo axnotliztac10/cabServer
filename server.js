@@ -58,4 +58,10 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('updatePosition', function (data) {
+		io.sockets.socket(data.clientSocketId).emit('positionUpdated', {
+			taxi: taxi
+		});
+	});
+
 });
