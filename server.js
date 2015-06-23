@@ -21,7 +21,6 @@ app.get('/', function (req, res) {
 io.sockets.on('connection', function (socket) {
 
 	socket.on('setClient', function (data) {
-		console.log(data);
 		data.socketId = socket.id;
 		data.id = socket.id; //Change by real client Id
 		data.type = 'client';
@@ -48,7 +47,10 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('taxiRequest', function (data) {
-		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', data.client)
+		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
+			client: data.client,
+			destination: data.destination
+		});
 	});
 
 	socket.on('taxiResponseToRequest', function (data) {
