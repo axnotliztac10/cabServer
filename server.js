@@ -48,8 +48,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiRequest', function (data) {
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
-			client: data.client,
-			destination: data.destination
+			client: data.client
 		});
 	});
 
@@ -64,6 +63,20 @@ io.sockets.on('connection', function (socket) {
 	socket.on('updatePosition', function (data) {
 		io.sockets.socket(data.clientSocketId).emit('positionUpdated', {
 			taxi: data.taxi
+		});
+	});
+
+	socket.on('cancelFromTaxi', function (data) {
+		io.sockets.socket(data.client.socketId).emit('positionUpdated', {
+			taxi: data.taxi,
+			client: data.client
+		});
+	});
+
+	socket.on('cancelFromClient', function (data) {
+		io.sockets.socket(data.taxi.socketId).emit('positionUpdated', {
+			taxi: data.taxi,
+			client: data.client
 		});
 	});
 
