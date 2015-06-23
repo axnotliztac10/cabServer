@@ -60,13 +60,9 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('updatePosition', function (data) {
-		collections.taxis[data.taxi.socketId].latitud  = data.taxi.latitud;
-		collections.taxis[data.taxi.socketId].longitud = data.taxi.longitud;
+		collections.taxis[socket.id].latitud  = data.taxi.latitud;
+		collections.taxis[socket.id].longitud = data.taxi.longitud;
 		socket.emit('activeTaxis', collections.taxis);
-		/*io.sockets.socket(data.clientSocketId).emit('positionUpdated', {
-			taxi: data.taxi,
-			distance: data.distance
-		});*/
 	});
 
 	socket.on('cancelFromTaxi', function (data) {
