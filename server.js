@@ -62,7 +62,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('updatePosition', function (data) {
 		collections.taxis[socket.id].latitud  = data.taxi.latitud;
 		collections.taxis[socket.id].longitud = data.taxi.longitud;
-		socket.emit('activeTaxis', collections.taxis);
+		socket.broadcast.emit('activeTaxis', collections.taxis);
 	});
 
 	socket.on('cancelFromTaxi', function (data) {
