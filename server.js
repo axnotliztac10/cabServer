@@ -46,7 +46,8 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiRequest', function (data) {
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
-			client: data.client
+			client: data.client,
+			destination: data.destination
 		});
 	});
 
