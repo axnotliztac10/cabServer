@@ -22,7 +22,6 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setClient', function (data) {
 		data.socketId = socket.id;
-		data.id = socket.id; //Change by real client Id
 		data.type = 'client';
 		collections.clients[socket.id] = data;
 
@@ -32,7 +31,6 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setTaxi', function (data) {
 		data.socketId = socket.id;
-		data.id = socket.id; //Change by real taxi Id
 		data.type = 'taxi';
 		collections.taxis[socket.id] = data;
 
@@ -61,10 +59,13 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('updatePosition', function (data) {
-		io.sockets.socket(data.clientSocketId).emit('positionUpdated', {
+		collections.taxis[data.taxi.socketId].latitud  = data.taxi.latitud;
+		collections.taxis[data.taxi.socketId].longitud = data.taxi.longitud;
+		socket.emit('activeTaxis', collections.taxis);
+		/*io.sockets.socket(data.clientSocketId).emit('positionUpdated', {
 			taxi: data.taxi,
 			distance: data.distance
-		});
+		});*/
 	});
 
 	socket.on('cancelFromTaxi', function (data) {
