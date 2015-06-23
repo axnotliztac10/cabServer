@@ -60,8 +60,8 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('updatePosition', function (data) {
-		collections.taxis[socket.id].latitud  = data.taxi.latitud;
-		collections.taxis[socket.id].longitud = data.taxi.longitud;
+		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
+		collections.taxis[socket.id] = data.taxi;
 		socket.broadcast.emit('activeTaxis', collections.taxis);
 	});
 
