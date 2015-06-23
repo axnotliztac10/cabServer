@@ -67,14 +67,14 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('cancelFromTaxi', function (data) {
-		io.sockets.socket(data.client.socketId).emit('positionUpdated', {
+		io.sockets.socket(data.client.socketId).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
 	});
 
 	socket.on('cancelFromClient', function (data) {
-		io.sockets.socket(data.taxi.socketId).emit('positionUpdated', {
+		io.sockets.socket(data.taxi.socketId).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
