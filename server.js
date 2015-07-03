@@ -45,6 +45,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('taxiRequest', function (data) {
+		if (!data || !data.taxi || !data.taxi.socketId)
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
 			client: data.client,
 			destination: data.destination
@@ -52,6 +53,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('taxiResponseToRequest', function (data) {
+		if (!data || !data.client || !data.client.socketId) return;
 		io.sockets.socket(data.client.socketId).emit('taxiResponseToRequest', {
 			client: data.client,
 			taxi: data.taxi,
@@ -66,6 +68,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('cancelFromTaxi', function (data) {
+		if (!data || !data.client || !data.client.socketId) return;
 		io.sockets.socket(data.client.socketId).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
@@ -73,6 +76,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('cancelFromClient', function (data) {
+		if (!data || !data.taxi || !data.taxi.socketId) return;
 		io.sockets.socket(data.taxi.socketId).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
