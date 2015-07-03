@@ -45,7 +45,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('taxiRequest', function (data) {
-		if (!data || !data.taxi || !data.taxi.socketId)
+		if (!data || !data.taxi || !data.taxi.socketId) return;
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
 			client: data.client,
 			destination: data.destination
