@@ -83,4 +83,12 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('setArrived', function (data) {
+		if (!data || !data.client || !data.client.socketId) return;
+		io.sockets.socket(data.client.socketId).emit('getArrived', {
+			taxi: data.taxi,
+			client: data.client
+		});
+	});
+
 });
