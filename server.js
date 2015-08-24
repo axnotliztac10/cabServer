@@ -52,7 +52,8 @@ io.sockets.on('connection', function (socket) {
 		if (!data || !data.taxi || !data.taxi.socketId) return;
 		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
 			client: data.client,
-			destination: data.destination
+			destination: data.destination,
+			ride: data.ride
 		});
 	});
 
