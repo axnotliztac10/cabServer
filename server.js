@@ -12,12 +12,12 @@ var express = require('express'),
 
 server.listen(3000);
 
-app.use('/public', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
-app.use('/admin', express.static(__dirname + '../admin'));
+app.use(express.static(__dirname + '../admin'));
 
 app.get('/', function (req, res) {
-	res.sendfile(__dirname + '/public/index.html');
+	res.sendfile(__dirname + '../admin/index.html');
 });
 
 io.sockets.on('connection', function (socket) {
