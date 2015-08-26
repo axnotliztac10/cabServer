@@ -12,7 +12,7 @@ var express = require('express'),
 
 server.listen(3000);
 
-app.use(express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 var adminPath = require('path').resolve(__dirname + "/../admin");
 app.use(express.static(adminPath));
 
