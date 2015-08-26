@@ -13,11 +13,11 @@ var express = require('express'),
 server.listen(3000);
 
 app.use(express.static(__dirname + '/public'));
-
-app.use(express.static(__dirname + '../admin'));
+var adminPath = require('path').resolve(__dirname + "/../admin");
+app.use(express.static(adminPath));
 
 app.get('/', function (req, res) {
-	res.sendfile(__dirname + '../admin/index.html');
+	res.sendfile(adminPath + '/index.html');
 });
 
 io.sockets.on('connection', function (socket) {
