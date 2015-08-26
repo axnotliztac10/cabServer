@@ -14,6 +14,8 @@ server.listen(3000);
 
 app.use('/public', express.static(__dirname + '/public'));
 
+app.use('/admin', express.static(__dirname + '../admin'));
+
 app.get('/', function (req, res) {
 	res.sendfile(__dirname + '/public/index.html');
 });
