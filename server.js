@@ -69,6 +69,14 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('finishAndFare', function (data) {
+		if (!data || !data.client || !data.client.socketId) return;
+		io.sockets.socket(data.client.socketId).emit('finishAndFare', {
+			client: data.client,
+			taxi: data.taxi
+		});
+	});
+
 	socket.on('updatePosition', function (data) {
 		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
 		collections.taxis[socket.id] = data.taxi;
