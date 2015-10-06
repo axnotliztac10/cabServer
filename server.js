@@ -70,10 +70,11 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('finishAndFare', function (data) {
-		if (!data || !data.client || !data.client.socketId) return;
+		//if (!data || !data.client || !data.client.socketId) return;
 		io.sockets.socket(data.client.socketId).emit('finishAndFare', {
 			client: data.client,
-			taxi: data.taxi
+			taxi: data.taxi,
+			fare: data.fare
 		});
 	});
 
