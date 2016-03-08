@@ -5,19 +5,16 @@ var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server),
-	gcm = require('node-gcm'),
 	collections = {
 		clients: {},
 		taxis: {}
-	};
-
-var message = new gcm.Message();
+	},
+	gcm = require('node-gcm'),
+	message = new gcm.Message(),
+	sender = new gcm.Sender('AIzaSyDNtH9vzXcd4jZJoUSYMNuLdM4nd7UxeHg');
+	registrationIds = [];
  
-message.addData('key1', 'msg1');
 
-var regTokens = ['YOUR_REG_TOKEN_HERE'];
- 
-var sender = new gcm.Sender('AIzaSyDNtH9vzXcd4jZJoUSYMNuLdM4nd7UxeHg');
 
 server.listen(3000);
 
@@ -48,9 +45,17 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('setTaxiResponse', data);
 		socket.broadcast.emit('activeTaxis', collections.taxis);
 
-		sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-			if(err) console.error(err);
-			else 	console.log(response);
+		message.addData('message', "Hello Cordova!");
+		message.addData('title','Push Notification Sample' );
+		message.addData('msgcnt','2');
+		message.collapseKey = 'demo';
+		message.delayWhileIdle = true;
+		message.timeToLive = 3000;
+
+		registrationIds.push(' ');
+
+		sender.send(message, registrationIds, 4, function (err, result) {
+		    console.log(result);
 		});
 	});
 
