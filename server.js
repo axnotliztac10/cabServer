@@ -11,7 +11,7 @@ var express = require('express'),
 	},
 	gcm = require('node-gcm'),
 	message = new gcm.Message(),
-	sender = new gcm.Sender('AIzaSyDNtH9vzXcd4jZJoUSYMNuLdM4nd7UxeHg');
+	sender = new gcm.Sender('AIzaSyDNtH9vzXcd4jZJoUSYMNuLdM4nd7UxeHg'),
 	registrationIds = [];
  
 
