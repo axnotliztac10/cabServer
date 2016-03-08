@@ -4,7 +4,9 @@
   "description": "Google map with auto updating markers using node.js and socket.io ",
   "main": "server.js",
   "dependencies": {
+    "android-gcm": "^0.1.5",
     "express": "~3.2.2",
+    "node-gcm": "^0.14.0",
     "path": "^0.11.14",
     "socket.io": "~0.9.14"
   },
