@@ -9,12 +9,11 @@ var express = require('express'),
 		clients: {},
 		taxis: {}
 	},
-	gcm = require('node-gcm'),
-	message = new gcm.Message(),
-	sender = new gcm.Sender('AIzaSyDNtH9vzXcd4jZJoUSYMNuLdM4nd7UxeHg'),
-	registrationIds = [];
- 
-
+	ionicPushServer = require('ionic-push-server'),
+	credentials = {  
+	    IonicApplicationID : "6588f54b",
+	    IonicApplicationAPIsecret : "f5001dc97adad007aa04c01c078ef0927bc35b556e348cb7"
+	};
 
 server.listen(3000);
 
@@ -45,18 +44,25 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('setTaxiResponse', data);
 		socket.broadcast.emit('activeTaxis', collections.taxis);
 
-		message.addData('message', "Hello Cordova!");
-		message.addData('title','Push Notification Sample' );
-		message.addData('msgcnt','2');
-		message.collapseKey = 'demo';
-		message.delayWhileIdle = true;
-		message.timeToLive = 3000;
+		var notification = {  
+		  "tokens":["TOKEN_DEL_DISPOSITIVO"],
+		  "notification":{
+		    "alert":"Probando notificaciones PUSH con Ionic!",
+		    "ios":{
+		      "badge":1,
+		      "sound":"chime.aiff",
+		      "expiry": 1423238641,
+		      "priority": 10,
+		      "contentAvailable": true,
+		      "payload":{
+		        "key1":"value",
+		        "key2":"value"
+		      }
+		    }
+		  } 
+		};
 
-		registrationIds.push(' ');
-
-		sender.send(message, registrationIds, 4, function (err, result) {
-		    console.log(result);
-		});
+		ionicPushServer(credentials, notification);  
 	});
 
 	socket.on('setAdmin', function (data) {
