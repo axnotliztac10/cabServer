@@ -39,9 +39,9 @@ http.get(options, function(response) {
   });
 });
 
-var sendPushNotification = function (message) {
+var sendPushNotification = function (message, token) {
 	var notification = {  
-	  "tokens": tokens,
+	  "tokens": token || tokens,
 	  "notification":{
 	    "alert": message,
 	    "ios":{
@@ -103,7 +103,8 @@ io.sockets.on('connection', function (socket) {
 			ride: data.ride,
 			destination_position: data.destination_position
 		});
-		sendPushNotification('Tienes una solicitud nueva.');
+
+		sendPushNotification('Tienes una solicitud nueva.', [data.taxi.token]);
 	});
 
 	socket.on('taxiResponseToRequest', function (data) {
@@ -114,7 +115,7 @@ io.sockets.on('connection', function (socket) {
 			accepted: data.accepted
 		});
 
-		sendPushNotification('Servicio aceptado.');
+		sendPushNotification('Servicio aceptado.', [data.client.token]);
 	});
 
 	socket.on('finishAndFare', function (data) {
@@ -155,7 +156,7 @@ io.sockets.on('connection', function (socket) {
 			client: data.client
 		});
 
-		sendPushNotification('El conductor ha llegado a tu posicion.');
+		sendPushNotification('El conductor ha llegado a tu posicion.', [data.client.token]);
 	});
 
 });
