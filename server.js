@@ -39,6 +39,28 @@ http.get(options, function(response) {
   });
 });
 
+var sendPushNotification = function (message) {
+	var notification = {  
+	  "tokens": tokens,
+	  "notification":{
+	    "alert": message,
+	    "ios":{
+	      "badge":1,
+	      "sound":"chime.aiff",
+	      "expiry": 1423238641,
+	      "priority": 10,
+	      "contentAvailable": true,
+	      "payload":{
+	        "key1":"value",
+	        "key2":"value"
+	      }
+	    }
+	  } 
+	};
+
+	ionicPushServer(credentials, notification);  
+};
+
 app.get('/', function (req, res) {
 	res.sendfile(adminPath + '/index.html');
 });
@@ -61,26 +83,6 @@ io.sockets.on('connection', function (socket) {
 
 		socket.emit('setTaxiResponse', data);
 		socket.broadcast.emit('activeTaxis', collections.taxis);
-
-		var notification = {  
-		  "tokens": tokens,
-		  "notification":{
-		    "alert":"Probando notificaciones PUSH con Ionic!",
-		    "ios":{
-		      "badge":1,
-		      "sound":"chime.aiff",
-		      "expiry": 1423238641,
-		      "priority": 10,
-		      "contentAvailable": true,
-		      "payload":{
-		        "key1":"value",
-		        "key2":"value"
-		      }
-		    }
-		  } 
-		};
-
-		ionicPushServer(credentials, notification);  
 	});
 
 	socket.on('setAdmin', function (data) {
@@ -101,6 +103,7 @@ io.sockets.on('connection', function (socket) {
 			ride: data.ride,
 			destination_position: data.destination_position
 		});
+		sendPushNotification('Tienes una solicitud nueva.');
 	});
 
 	socket.on('taxiResponseToRequest', function (data) {
@@ -110,6 +113,8 @@ io.sockets.on('connection', function (socket) {
 			taxi: data.taxi,
 			accepted: data.accepted
 		});
+
+		sendPushNotification('Servicio aceptado.');
 	});
 
 	socket.on('finishAndFare', function (data) {
@@ -149,6 +154,8 @@ io.sockets.on('connection', function (socket) {
 			taxi: data.taxi,
 			client: data.client
 		});
+
+		sendPushNotification('El conductor ha llegado a tu posicion.');
 	});
 
 });
