@@ -13,13 +13,31 @@ var express = require('express'),
 	credentials = {  
 	    IonicApplicationID : "6588f54b",
 	    IonicApplicationAPIsecret : "f5001dc97adad007aa04c01c078ef0927bc35b556e348cb7"
-	};
+	},
+	http = require('http'),
+	tokens = [];
 
 server.listen(3000);
 
 app.use('/public', express.static(__dirname + '/public'));
 var adminPath = require('path').resolve(__dirname + "/../admin");
 app.use(express.static(adminPath));
+
+var options = {
+  host: 'taxipreferente.azurewebsites.net',
+  path: '/api/Admin/Devices'
+};
+
+http.get(options, function(response) {
+  var str = ''
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  response.on('end', function () {
+    var tokens = JSON.parse(str);
+  });
+});
 
 app.get('/', function (req, res) {
 	res.sendfile(adminPath + '/index.html');
@@ -45,7 +63,7 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('activeTaxis', collections.taxis);
 
 		var notification = {  
-		  "tokens":["TOKEN_DEL_DISPOSITIVO"],
+		  "tokens": tokens,
 		  "notification":{
 		    "alert":"Probando notificaciones PUSH con Ionic!",
 		    "ios":{
