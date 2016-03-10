@@ -35,7 +35,7 @@ http.get(options, function(response) {
   });
 
   response.on('end', function () {
-    var tokens = JSON.parse(str);
+    tokens = JSON.parse(str);
   });
 });
 
