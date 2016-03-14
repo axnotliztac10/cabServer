@@ -159,4 +159,15 @@ io.sockets.on('connection', function (socket) {
 		sendPushNotification('El conductor ha llegado a tu posicion.', [data.client.token]);
 	});
 
+	socket.on('sendPaymentConfirm', function (data) {
+		if (!data || !data.taxi || !data.taxi.socketId) return;
+		io.sockets.socket(data.taxi.socketId).emit('sendPaymentConfirm', {
+			taxi: data.taxi,
+			client: data.client,
+			payment_type: data.payment_type
+		});
+
+		sendPushNotification('El conductor ha llegado a tu posicion.', [data.client.token]);
+	});
+
 });
