@@ -160,6 +160,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('sendPaymentConfirm', function (data) {
+		console.log(data);
 		if (!data || !data.taxi || !data.taxi.socketId) return;
 		io.sockets.socket(data.taxi.socketId).emit('sendPaymentConfirm', {
 			taxi: data.taxi,
@@ -167,7 +168,7 @@ io.sockets.on('connection', function (socket) {
 			payment_type: data.payment_type
 		});
 
-		sendPushNotification('El conductor ha llegado a tu posicion.', [data.client.token]);
+		sendPushNotification('Pago existoso.', [data.client.token]);
 	});
 
 });
