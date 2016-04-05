@@ -63,7 +63,7 @@ var sendPushNotification = function (message, token) {
 
 var getSocketId = function (user, type) {
 	for (var i in collections[type]) {
-		if (collections[type][i].id == user.id) console.log(i); 
+		if (collections[type][i].id == user.id) return i;
 	}
 }
 
