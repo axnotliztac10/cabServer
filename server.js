@@ -61,6 +61,12 @@ var sendPushNotification = function (message, token) {
 	ionicPushServer(credentials, notification);  
 };
 
+var getSocketId = function (user, type) {
+	for (var i in collections[type]) {
+		if (collections[type][i].id == user.id) console.log(i); 
+	}
+}
+
 app.get('/', function (req, res) {
 	res.sendfile(adminPath + '/index.html');
 });
@@ -97,7 +103,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiRequest', function (data) {
 		if (!data || !data.taxi || !data.taxi.socketId) return;
-		io.sockets.socket(data.taxi.socketId).emit('taxiRequest', {
+		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('taxiRequest', {
 			client: data.client,
 			destination: data.destination,
 			ride: data.ride,
@@ -109,7 +115,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiResponseToRequest', function (data) {
 		if (!data || !data.client || !data.client.socketId) return;
-		io.sockets.socket(data.client.socketId).emit('taxiResponseToRequest', {
+		io.sockets.socket(getSocketId(data.client, 'clients')).emit('taxiResponseToRequest', {
 			client: data.client,
 			taxi: data.taxi,
 			accepted: data.accepted
@@ -120,7 +126,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('finishAndFare', function (data) {
 		//if (!data || !data.client || !data.client.socketId) return;
-		io.sockets.socket(data.client.socketId).emit('finishAndFare', {
+		io.sockets.socket(getSocketId(data.client, 'clients')).emit('finishAndFare', {
 			client: data.client,
 			taxi: data.taxi,
 			fare: data.fare
@@ -135,7 +141,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('cancelFromTaxi', function (data) {
 		if (!data || !data.client || !data.client.socketId) return;
-		io.sockets.socket(data.client.socketId).emit('canceled', {
+		io.sockets.socket(getSocketId(data.client, 'clients')).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -143,7 +149,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('cancelFromClient', function (data) {
 		if (!data || !data.taxi || !data.taxi.socketId) return;
-		io.sockets.socket(data.taxi.socketId).emit('canceled', {
+		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -151,7 +157,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setArrived', function (data) {
 		if (!data || !data.client || !data.client.socketId) return;
-		io.sockets.socket(data.client.socketId).emit('getArrived', {
+		io.sockets.socket(getSocketId(data.client, 'clients')).emit('getArrived', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -162,7 +168,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('sendPaymentConfirm', function (data) {
 		console.log(data);
 		if (!data || !data.taxi || !data.taxi.socketId) return;
-		io.sockets.socket(data.taxi.socketId).emit('sendPaymentConfirm', {
+		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('sendPaymentConfirm', {
 			taxi: data.taxi,
 			client: data.client,
 			payment_type: data.payment_type
