@@ -4,7 +4,7 @@
 var express = require('express'),
 	app = express(),
 	server = require('http').createServer(app),
-	io = require('socket.io').listen(server),
+	io = require('socket.io').listen(server, { log: false }),
 	collections = {
 		clients: {},
 		taxis: {}
@@ -62,7 +62,9 @@ var sendPushNotification = function (message, token) {
 };
 
 var getSocketId = function (user, type) {
+	console.log(user);
 	for (var i in collections[type]) {
+		console.log(collections[type])
 		if (collections[type][i].id == user.id) return i;
 	}
 }
