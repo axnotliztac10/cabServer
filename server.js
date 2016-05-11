@@ -102,7 +102,6 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('taxiRequest', function (data) {
-		console.log(data.client)
 		if (!data || !data.taxi) return;
 		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('taxiRequest', {
 			client: data.client,
@@ -175,6 +174,22 @@ io.sockets.on('connection', function (socket) {
 		});
 
 		sendPushNotification('Pago existoso.', [data.client.token]);
+	});
+
+	socket.on('destinationSelectedClient', funciton (data) {
+		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('getArrived', {
+			taxi: data.taxi,
+			client: data.client,
+			destination: data.destination
+		});
+	});
+
+	socket.on('destinationSelectedDriver', funciton (data) {
+		io.sockets.socket(getSocketId(data.client, 'clients')).emit('getArrived', {
+			taxi: data.taxi,
+			client: data.client,
+			destination: data.destination
+		});
 	});
 
 });
