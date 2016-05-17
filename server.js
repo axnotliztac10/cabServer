@@ -177,6 +177,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('destinationSelectedClient', function (data) {
+		if (!data || !data.taxi) return;
 		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('destinationSelected', {
 			taxi: data.taxi,
 			client: data.client,
@@ -185,6 +186,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('destinationSelectedDriver', function (data) {
+		if (!data || !data.client) return;
 		io.sockets.socket(getSocketId(data.client, 'clients')).emit('destinationSelected', {
 			taxi: data.taxi,
 			client: data.client,
