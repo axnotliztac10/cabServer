@@ -129,7 +129,8 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.socket(getSocketId(data.client, 'clients')).emit('finishAndFare', {
 			client: data.client,
 			taxi: data.taxi,
-			fare: data.fare
+			fare: data.fare,
+			clientCard: data.clientCard
 		});
 	});
 
