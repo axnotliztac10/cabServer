@@ -19,6 +19,10 @@ var express = require('express'),
 
 server.listen(3000);
 
+app.get('/', function (req, res) {
+	res.json('status': 'ok');
+});
+
 app.use('/public', express.static(__dirname + '/public'));
 var adminPath = require('path').resolve(__dirname + "/../admin");
 app.use(express.static(adminPath));
