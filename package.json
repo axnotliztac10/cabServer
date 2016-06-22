@@ -14,6 +14,15 @@
     "socket.io": "~0.9.14"
   },
   "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cnandreu/real-time-map.git"
+  },
+  "author": "Carlos Andreu",
   "license": "MIT",
   "readmeFilename": "README.md",
   "gitHead": "1f39d1ec5356a54f69faf56bc0bfc2ec55c70c28"
