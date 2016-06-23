@@ -17,7 +17,7 @@ var express = require('express'),
 	http = require('http'),
 	tokens = [];
 
-server.listen(3000);
+server.listen(process.env.port);
 
 app.get('/', function (req, res) {
 	res.json({'status': 'ok'});
