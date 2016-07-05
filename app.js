@@ -111,7 +111,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiRequest', function (data) {
 		if (!data || !data.taxi) return;
-		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('taxiRequest', {
+		io.sockets.connected[getSocketId(data.taxi, 'taxis')].emit('taxiRequest', {
 			client: data.client,
 			destination: data.destination,
 			ride: data.ride,
@@ -123,7 +123,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('taxiResponseToRequest', function (data) {
 		if (!data || !data.client) return;
-		io.sockets.socket(getSocketId(data.client, 'clients')).emit('taxiResponseToRequest', {
+		io.sockets.connected[getSocketId(data.client, 'clients')].emit('taxiResponseToRequest', {
 			client: data.client,
 			taxi: data.taxi,
 			accepted: data.accepted
@@ -134,7 +134,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('finishAndFare', function (data) {
 		if (!data || !data.client) return;
-		io.sockets.socket(getSocketId(data.client, 'clients')).emit('finishAndFare', {
+		io.sockets.connected[getSocketId(data.client, 'clients')].emit('finishAndFare', {
 			client: data.client,
 			taxi: data.taxi,
 			fare: data.fare,
@@ -150,7 +150,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('cancelFromTaxi', function (data) {
 		if (!data || !data.client) return;
-		io.sockets.socket(getSocketId(data.client, 'clients')).emit('canceled', {
+		io.sockets.connected[getSocketId(data.client, 'clients')].emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -158,7 +158,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('cancelFromClient', function (data) {
 		if (!data || !data.taxi) return;
-		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('canceled', {
+		io.sockets.connected[getSocketId(data.taxi, 'taxis')].emit('canceled', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -166,7 +166,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('setArrived', function (data) {
 		if (!data || !data.client) return;
-		io.sockets.socket(getSocketId(data.client, 'clients')).emit('getArrived', {
+		io.sockets.connected[getSocketId(data.client, 'clients')].emit('getArrived', {
 			taxi: data.taxi,
 			client: data.client
 		});
@@ -176,7 +176,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('sendPaymentConfirm', function (data) {
 		if (!data || !data.taxi) return;
-		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('sendPaymentConfirm', {
+		io.sockets.connected[getSocketId(data.taxi, 'taxis')].emit('sendPaymentConfirm', {
 			taxi: data.taxi,
 			client: data.client,
 			payment_type: data.payment_type
@@ -187,7 +187,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('destinationSelectedClient', function (data) {
 		if (!data || !data.taxi) return;
-		io.sockets.socket(getSocketId(data.taxi, 'taxis')).emit('destinationSelected', {
+		io.sockets.connected[getSocketId(data.taxi, 'taxis')].emit('destinationSelected', {
 			taxi: data.taxi,
 			client: data.client,
 			destination: data.destination
@@ -196,7 +196,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('destinationSelectedDriver', function (data) {
 		if (!data || !data.client) return;
-		io.sockets.socket(getSocketId(data.client, 'clients')).emit('destinationSelected', {
+		io.sockets.connected[getSocketId(data.client, 'clients')].emit('destinationSelected', {
 			taxi: data.taxi,
 			client: data.client,
 			destination: data.destination
