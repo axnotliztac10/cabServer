@@ -99,6 +99,10 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('activeTaxis', collections.taxis);
 	});
 
+	socket.on('updateActiveTaxis', function (data) {
+		socket.emit('activeTaxis', collections.taxis);
+	});
+
 	socket.on('disconnect', function() {
 		if (collections.taxis[socket.id]) delete collections.taxis[socket.id];
 		if (collections.clients[socket.id]) delete collections.clients[socket.id];
