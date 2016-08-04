@@ -10,7 +10,7 @@ var express = require('express'),
 		taxis: {}
 	},
 	ionicPushServer = require('ionic-push-server'),
-	credentials = {  
+	credentials = {
 	    IonicApplicationID : "6588f54b",
 	    IonicApplicationAPIsecret : "f5001dc97adad007aa04c01c078ef0927bc35b556e348cb7"
 	},
